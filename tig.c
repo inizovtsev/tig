@@ -8270,6 +8270,11 @@ main_request(struct view *view, enum request request, struct line *line)
 				? OPEN_SPLIT : OPEN_DEFAULT;
 
 	switch (request) {
+            
+    case REQ_VIEW_BLAME:
+        string_copy(opt_ref, view->ref);
+        return request;
+            
 	case REQ_NEXT:
 	case REQ_PREVIOUS:
 		if (view_is_displayed(view) && display[0] != view)
@@ -9301,12 +9306,21 @@ run_prompt_command(struct view *view, char *cmd) {
 int
 main(int argc, const char *argv[])
 {
+    char a[90];
+    getcwd(a, 89);
+    
+    printf("Working directory is \"%s\"\n", a);
+    
 	const char *codeset = ENCODING_UTF8;
 	bool pager_mode = !isatty(STDIN_FILENO);
 	enum request request = parse_options(argc, argv, pager_mode);
 	struct view *view;
 	int i;
 
+    if (opt_file_argv && *opt_file_argv[0]){
+        strcpy(opt_file, opt_file_argv[0]);
+    }
+    
 	signal(SIGINT, quit);
 	signal(SIGQUIT, quit);
 	signal(SIGPIPE, SIG_IGN);
