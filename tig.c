@@ -1831,9 +1831,9 @@ load_options(void)
 	const char *tig_diff_opts = getenv("TIG_DIFF_OPTS");
 	const bool diff_opts_from_args = !!opt_diff_argv;
 
-	if (!tigrc_system)
-		tigrc_system = SYSCONFDIR "/tigrc";
-	load_option_file(tigrc_system);
+	//if (!tigrc_system)
+	//	tigrc_system = SYSCONFDIR "/tigrc";
+	//load_option_file(tigrc_system);
 
 	if (!tigrc_user)
 		tigrc_user = "~/.tigrc";
